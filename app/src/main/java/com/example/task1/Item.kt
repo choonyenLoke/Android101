@@ -3,13 +3,13 @@ package com.example.task1
 import android.os.Parcel
 import android.os.Parcelable
 
-data class Item (val mImageRes: Int, val mTitle: String?, val mSub: String?, val mDesc: String?) :
+data class Item (var mImageRes: Int, var mTitle: String, var mSub: String, var mDesc: String) :
     Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString()
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString()
     ) {
     }
 

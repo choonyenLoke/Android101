@@ -17,20 +17,24 @@ class DetailActivity : AppCompatActivity() {
         actionbar?.setDisplayHomeAsUpEnabled(true)
 
         intent?.let {
-            val item = intent.getParcelableExtra<Item>(RecyclerAdapter.ITEM)
-            val itemTitle = item?.mTitle.toString()
-            val itemSubTitle = item?.mSub.toString()
-            val itemDesc = item?.mDesc.toString()
-            val imageRes = item.mImageRes
 
-            val detailTitle = findViewById<TextView>(R.id.imageTitle)
-            detailTitle.text = itemTitle
-            val detailSub = findViewById<TextView>(R.id.imageSubTitle)
-            detailSub.text = itemSubTitle
-            val detailDesc = findViewById<TextView>(R.id.imageDescription)
-            detailDesc.text = itemDesc
-            val imageItem = findViewById<ImageView>(R.id.imageDetail)
-            imageItem.setImageResource(imageRes)
+            val item = it.getParcelableExtra<Item>(MainActivity.ITEM)
+            if(item != null){
+                val itemTitle = item.mTitle
+                val itemSubTitle = item.mSub
+                val itemDesc = item.mDesc
+                val imageRes = item.mImageRes
+
+                val detailTitle = findViewById<TextView>(R.id.imageTitle)
+                detailTitle.text = itemTitle
+                val detailSub = findViewById<TextView>(R.id.imageSubTitle)
+                detailSub.text = itemSubTitle
+                val detailDesc = findViewById<TextView>(R.id.imageDescription)
+                detailDesc.text = itemDesc
+                val imageItem = findViewById<ImageView>(R.id.imageDetail)
+                imageItem.setImageResource(imageRes)
+            }
+
 
         }
 
