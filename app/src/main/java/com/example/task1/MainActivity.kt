@@ -4,17 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.cardview.widget.CardView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.card_view.*
-import org.w3c.dom.Text
-import java.text.FieldPosition
 
-class MainActivity : AppCompatActivity(), View.OnClickListener{
+
+class MainActivity : AppCompatActivity(){
 
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>? = null
@@ -25,6 +20,36 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         const val ITEM = "item"
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        itemList = ArrayList()
+
+        loadData()
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        recyclerView.setHasFixedSize(true)
+
+        adapter = RecyclerAdapter(itemList!!)
+        (adapter as RecyclerAdapter).onItemClick = {
+            item ->
+            //Toast.makeText(this@MainActivity,"test", Toast.LENGTH_LONG).show()
+            val imageRes = item.mImageRes
+            val title = item.mTitle
+            val subTitle = item.mSub
+            val desc = item.mDesc
+
+            val items = Item(imageRes, title, subTitle, desc)
+            val intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra(ITEM, items)
+            startActivity(intent)
+
+        }
+
+        recyclerView.adapter = adapter
+
+    }
     private fun loadData(){
         val titles = arrayOf("Test 1", "Test 2", "Test 3",
             "Test 4", "Test 5", "Test 6", "Test 7", "Test 8", "Test 9",
@@ -82,45 +107,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         for(i in 0..19){
             val item = Item(images[i],titles[i], subTitles[i], desc[i])
             itemList!!.add(item)
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        itemList = ArrayList<Item>()
-
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        recyclerView.setHasFixedSize(true)
-
-        adapter = RecyclerAdapter(itemList!!)
-        recyclerView.adapter = adapter
-
-        loadData()
-        recyclerView.setOnClickListener(this)
-    }
-
-    override fun onClick(v: View?) {
-
-        if (v != null) {
-            val itemImage = v.findViewById<ImageView>(R.id.item_img)
-            val itemTitle = v.findViewById<TextView>(R.id.item_title)
-            val itemSubTitle = v.findViewById<TextView>(R.id.subTitle)
-            val itemDesc = v.findViewById<TextView>(R.id.item_desc)
-
-            val title = itemTitle.text.toString()
-            val subTitle = itemSubTitle.text.toString()
-            val desc = itemDesc.text.toString()
-            val imageRes = itemImage.tag.toString().toInt()
-
-            val item = Item(imageRes, title, subTitle, desc)
-
-            val intent = Intent(v.context, DetailActivity::class.java)
-            intent.putExtra(ITEM, item)
-
-            v.context.startActivity(intent)
         }
     }
 
