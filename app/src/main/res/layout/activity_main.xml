@@ -12,6 +12,7 @@
         android:id="@+id/recyclerView"
         android:scrollbars="vertical"
         android:fitsSystemWindows="true"
+        tools:listitem="@layout/card_view"
         >
     </androidx.recyclerview.widget.RecyclerView>
 

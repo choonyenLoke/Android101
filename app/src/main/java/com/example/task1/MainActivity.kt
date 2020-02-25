@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity(){
 
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>? = null
-    private var itemList: ArrayList<Item>? = null
+    private lateinit var itemList: ArrayList<Item>
 
 
     companion object {
@@ -31,9 +31,9 @@ class MainActivity : AppCompatActivity(){
         recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recyclerView.setHasFixedSize(true)
 
-        adapter = RecyclerAdapter(itemList!!)
+        adapter = RecyclerAdapter(itemList)
         (adapter as RecyclerAdapter).onItemClick = {
-            item ->
+                item ->
             //Toast.makeText(this@MainActivity,"test", Toast.LENGTH_LONG).show()
             val imageRes = item.mImageRes
             val title = item.mTitle
@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity(){
 
         for(i in 0..19){
             val item = Item(images[i],titles[i], subTitles[i], desc[i])
-            itemList!!.add(item)
+            itemList.add(item)
         }
     }
 

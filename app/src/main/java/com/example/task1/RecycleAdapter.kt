@@ -38,21 +38,20 @@ class RecyclerAdapter(itemList: ArrayList<Item>) : RecyclerView.Adapter<Recycler
         val v: View = inflater.inflate(R.layout.card_view, parent, false)
         return ViewHolder(v)
     }
-     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int){
-         val item = itemList[i]
+    override fun onBindViewHolder(viewHolder: ViewHolder, i: Int){
+        val item = itemList[i]
 
-         viewHolder.itemImage.setImageResource(item.mImageRes)
-         viewHolder.itemImage.tag = item.mImageRes
-         viewHolder.itemTitle.text = item.mTitle
-         viewHolder.itemSubTitle.text = item.mSub
-         viewHolder.itemDesc.text = item.mDesc
-     }
-     override fun getItemCount(): Int{
-         return itemList.size
-     }
-     companion object {
-         const val ITEM = "item"
-     }
+        viewHolder.itemImage.setImageResource(item.mImageRes)
+        viewHolder.itemImage.tag = item.mImageRes
+        viewHolder.itemTitle.text = item.mTitle
+        viewHolder.itemSubTitle.text = item.mSub
+        viewHolder.itemDesc.text = item.mDesc
+    }
+    override fun getItemCount(): Int{
+        return itemList.size
+    }
+    companion object {
+        const val ITEM = "item"
+    }
 
 }
-
