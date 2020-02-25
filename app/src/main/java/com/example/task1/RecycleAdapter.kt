@@ -1,6 +1,6 @@
 package com.example.task1
 
-import android.content.Intent
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +8,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
+class RecyclerAdapter(itemList: ArrayList<Item>) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
-class RecyclerAdapter(val itemList: ArrayList<Item>) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>(){
-
+    private lateinit var context: Context
+    var itemList = itemList
+    var onItemClick: ((Item) -> Unit)? = null
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
@@ -19,48 +21,31 @@ class RecyclerAdapter(val itemList: ArrayList<Item>) : RecyclerView.Adapter<Recy
         var itemSubTitle: TextView
         var itemDesc: TextView
 
-
-        fun bindItem(item: Item) {
-            itemImage.setImageResource(item.mImageRes)
-            itemImage.tag = item.mImageRes
-            itemTitle.text = item.mTitle
-            itemSubTitle.text = item.mSub
-            itemDesc.text = item.mDesc
-        }
-
-
         init {
             itemImage = itemView.findViewById(R.id.item_img)
             itemTitle = itemView.findViewById(R.id.item_title)
             itemSubTitle = itemView.findViewById(R.id.subTitle)
             itemDesc = itemView.findViewById(R.id.item_desc)
-
             itemView.setOnClickListener{
-
-                    val title = itemTitle.text.toString()
-                    val subTitle = itemSubTitle.text.toString()
-                    val desc = itemDesc.text.toString()
-                    val imageRes = itemImage.tag.toString().toInt()
-
-                    val item = Item(imageRes, title, subTitle, desc)
-
-                    val intent = Intent(itemView.context, DetailActivity::class.java)
-                    intent.putExtra(ITEM, item)
-
-                    itemView.context.startActivity(intent)
-                }
-
+                onItemClick!!.invoke(itemList[adapterPosition])
+            }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.card_view, parent, false)
+        context = parent.context
+        val inflater: LayoutInflater = LayoutInflater.from(context)
+        val v: View = inflater.inflate(R.layout.card_view, parent, false)
         return ViewHolder(v)
     }
      override fun onBindViewHolder(viewHolder: ViewHolder, i: Int){
-         viewHolder.bindItem(itemList[i])
+         val item = itemList[i]
 
+         viewHolder.itemImage.setImageResource(item.mImageRes)
+         viewHolder.itemImage.tag = item.mImageRes
+         viewHolder.itemTitle.text = item.mTitle
+         viewHolder.itemSubTitle.text = item.mSub
+         viewHolder.itemDesc.text = item.mDesc
      }
      override fun getItemCount(): Int{
          return itemList.size
@@ -68,5 +53,6 @@ class RecyclerAdapter(val itemList: ArrayList<Item>) : RecyclerView.Adapter<Recy
      companion object {
          const val ITEM = "item"
      }
+
 }
 
