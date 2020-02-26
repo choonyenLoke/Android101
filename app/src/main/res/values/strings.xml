@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Not So Dummy Listing App</string>
+    <string name="image">image</string>
+    <string name="hint_title">Title...</string>
+    <string name="hint_sub">Sub Title...</string>
+    <string name="hint_desc">Description...</string>
+    <string name="hint_url">Image URL...</string>
+    <string name="button_save">Save</string>
+    <string name="empty_not_saved">Item not saved due to empty field!!</string>
+    <string name="update">Update</string>
+</resources>

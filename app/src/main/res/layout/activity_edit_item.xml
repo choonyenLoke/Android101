@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".EditItem">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_update_title"
+            app:errorEnabled="true"
+            android:layout_marginTop="20dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="370dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/update_title"
+                android:inputType="none"
+                android:hint="@string/hint_title"
+                android:padding="6dp"
+                android:textSize="20sp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:maxLines="1"
+                android:enabled="false"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_update_sub"
+            app:errorEnabled="true">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="370dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/update_sub"
+                android:inputType="textMultiLine"
+                android:hint="@string/hint_sub"
+                android:padding="6dp"
+                android:textSize="20sp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:maxLines="3"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_update_desc"
+            app:errorEnabled="true">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="370dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/update_desc"
+                android:inputType="textMultiLine"
+                android:hint="@string/hint_desc"
+                android:padding="6dp"
+                android:textSize="20sp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_update_url"
+            app:errorEnabled="true">
+            <EditText
+                android:id="@+id/update_url"
+                android:layout_width="370dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:hint="@string/hint_url"
+                android:inputType="textUri"
+                android:padding="6dp"
+                android:textSize="20sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <ImageView
+            android:layout_width="380dp"
+            android:layout_height="380dp"
+            android:src="@drawable/broken"
+            android:id="@+id/imgPreviewUpdate"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center"
+            android:paddingTop="5dp"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnUpdate"
+            android:text="@string/update"
+            />
+
+
+    </LinearLayout>
+</ScrollView>
