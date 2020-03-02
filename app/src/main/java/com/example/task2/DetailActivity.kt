@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_detail.*
 
 private const val itemActivityRequestCode = 1
 
@@ -36,13 +37,13 @@ class DetailActivity : AppCompatActivity() {
             val imgUrl = it.getStringExtra("Url")
             url = imgUrl
 
-            val detailTitle = findViewById<TextView>(R.id.imageTitle)
+            val detailTitle = imageTitle
             detailTitle.text = title
-            val detailSub = findViewById<TextView>(R.id.imageSubTitle)
+            val detailSub = imageSubTitle
             detailSub.text = sub
-            val detailDesc = findViewById<TextView>(R.id.imageDescription)
+            val detailDesc = imageDescription
             detailDesc.text = desc
-            val detailImg = findViewById<ImageView>(R.id.detailImage)
+            val detailImg = detailImage
             Picasso.with(this)
                 .load(imgUrl)
                 .error(R.drawable.broken)
@@ -51,13 +52,13 @@ class DetailActivity : AppCompatActivity() {
                 .placeholder(R.drawable.load)
                 .into(detailImg)
         }
-        val fabEdit = findViewById<FloatingActionButton>(R.id.fab_edit)
-        val detailTitle = findViewById<TextView>(R.id.imageTitle)
-        val detailSub = findViewById<TextView>(R.id.imageSubTitle)
-        val detailDesc = findViewById<TextView>(R.id.imageDescription)
+        val fabEdit = fab_edit
+        val detailTitle = imageTitle
+        val detailSub = imageSubTitle
+        val detailDesc = imageDescription
 
         fabEdit.setOnClickListener{
-            val intent = Intent(this, EditItem::class.java)
+            val intent = Intent(this, EditItemActivity::class.java)
             intent.putExtra("Title", detailTitle.text.toString())
             intent.putExtra("Sub", detailSub.text.toString())
             intent.putExtra("Description", detailDesc.text.toString())
@@ -76,26 +77,22 @@ class DetailActivity : AppCompatActivity() {
         var updateDesc = ""
         var updateUrl = ""
 
-        if(requestCode == itemActivityRequestCode && resultCode == Activity.RESULT_OK){
-            data?.getStringExtra("UpdateTitle")?.let {
-                updateTitle = it
-            }
-            data?.getStringExtra("UpdateSub")?.let {
-                updateSub = it
-            }
-            data?.getStringExtra("UpdateDesc")?.let {
-                updateDesc = it
-            }
-            data?.getStringExtra("UpdateUrl")?.let {
-                updateUrl = it
+        if(requestCode == itemActivityRequestCode && resultCode == Activity.RESULT_OK)
+        {
+
+            data?.let {
+                updateTitle = it.getStringExtra("UpdateTitle").orEmpty()
+                updateSub = it.getStringExtra("UpdateSub").orEmpty()
+                updateDesc = it.getStringExtra("UpdateDesc").orEmpty()
+                updateUrl = it.getStringExtra("UpdateUrl").orEmpty()
             }
 
             val item = ItemClass(updateTitle, updateSub, updateDesc, updateUrl)
 
-            var title = findViewById<TextView>(R.id.imageTitle)
-            var sub = findViewById<TextView>(R.id.imageSubTitle)
-            var desc = findViewById<TextView>(R.id.imageDescription)
-            var imgView = findViewById<ImageView>(R.id.detailImage)
+            val title = imageTitle
+            val sub = imageSubTitle
+            val desc = imageDescription
+            val imgView = detailImage
 
             title.text = updateTitle
             sub.text = updateSub
