@@ -4,11 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
 
@@ -58,12 +55,12 @@ class DetailActivity : AppCompatActivity() {
         val detailDesc = imageDescription
 
         fabEdit.setOnClickListener{
-            val intent = Intent(this, EditItemActivity::class.java)
+            val intent = Intent(this, AddEditItemActivity::class.java)
             intent.putExtra("Title", detailTitle.text.toString())
             intent.putExtra("Sub", detailSub.text.toString())
             intent.putExtra("Description", detailDesc.text.toString())
             intent.putExtra("url", url)
-
+            intent.putExtra("ActivityName", "DetailItem")
             startActivityForResult(intent, itemActivityRequestCode)
         }
 
@@ -81,10 +78,10 @@ class DetailActivity : AppCompatActivity() {
         {
 
             data?.let {
-                updateTitle = it.getStringExtra("UpdateTitle").orEmpty()
-                updateSub = it.getStringExtra("UpdateSub").orEmpty()
-                updateDesc = it.getStringExtra("UpdateDesc").orEmpty()
-                updateUrl = it.getStringExtra("UpdateUrl").orEmpty()
+                updateTitle = it.getStringExtra(AddEditItemActivity.EXTRA_TITLE).orEmpty()
+                updateSub = it.getStringExtra(AddEditItemActivity.EXTRA_SUB).orEmpty()
+                updateDesc = it.getStringExtra(AddEditItemActivity.EXTRA_DESC).orEmpty()
+                updateUrl = it.getStringExtra(AddEditItemActivity.EXTRA_IMG).orEmpty()
             }
 
             val item = ItemClass(updateTitle, updateSub, updateDesc, updateUrl)

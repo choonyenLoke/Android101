@@ -54,7 +54,8 @@ class MainActivity : AppCompatActivity() {
 
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener{
-            val intent = Intent (this, AddItem::class.java)
+            val intent = Intent (this, AddEditItemActivity::class.java)
+            intent.putExtra("ActivityName", "ListItem")
             startActivityForResult(intent, itemActivityRequestCode)
         }
 
@@ -70,17 +71,11 @@ class MainActivity : AppCompatActivity() {
 
         if(requestCode == itemActivityRequestCode && resultCode == Activity.RESULT_OK){
 
-            data?.getStringExtra(AddItem.EXTRA_TITLE)?.let {
-                title = it
-            }
-            data?.getStringExtra(AddItem.EXTRA_SUB)?.let {
-                sub = it
-            }
-            data?.getStringExtra(AddItem.EXTRA_DESC)?.let{
-                desc = it
-            }
-            data?.getStringExtra(AddItem.EXTRA_IMG)?.let{
-                imgUrl = it
+            data?.let{
+                title = it.getStringExtra(AddEditItemActivity.EXTRA_TITLE).orEmpty()
+                sub = it.getStringExtra(AddEditItemActivity.EXTRA_SUB).orEmpty()
+                desc = it.getStringExtra(AddEditItemActivity.EXTRA_DESC).orEmpty()
+                imgUrl = it.getStringExtra(AddEditItemActivity.EXTRA_IMG).orEmpty()
             }
 
             val item = ItemClass(title,sub,desc,imgUrl)
