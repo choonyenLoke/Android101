@@ -12,14 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".EditItem"
-            android:parentActivityName=".MainActivity"></activity>
-        <activity android:name=".EditItemDetail" />
-        <activity
             android:name=".DetailActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".AddItem"
+            android:name=".AddEditItemActivity"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
