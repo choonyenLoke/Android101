@@ -9,7 +9,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".AddItem">
+        tools:context=".AddEditItemActivity">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -75,8 +75,9 @@
         <EditText
             android:layout_width="370dp"
             android:layout_height="wrap_content"
+            android:autofillHints="Title"
             android:id="@+id/edit_url"
-            android:inputType="textAutoComplete"
+            android:inputType="textUri"
             android:hint="@string/hint_url"
             android:padding="6dp"
             android:textSize="20sp"
@@ -92,12 +93,12 @@
             android:scaleType="centerCrop"
             android:layout_gravity="center"
             android:paddingTop="5dp"
+            android:contentDescription="@string/preview_image"
             />
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/btnSave"
-            android:text="Save"
             />
 
 
