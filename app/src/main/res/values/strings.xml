@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Kinda Advanced Listing App</string>
+    <string name="image" />
+    <string name="title">Title</string>
+    <string name="movieimage">MovieImage</string>
+    <string name="rating">Rating</string>
+    <string name="genre">Genre</string>
+    <string name="votes">Votes</string>
+    <string name="director">Director</string>
+    <string name="actors">Actors</string>
+    <string name="release">Release</string>
+    <string name="language">Language</string>
+    <string name="run_time">Run Time</string>
+    <string name="type">Type</string>
+    <string name="plot">Plot</string>
+    <string name="search_movie_title">Search Movie Title</string>
+    <string name="search">Search</string>
+</resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.MainActivity">
+
+    <EditText
+        android:id="@+id/searchBar"
+        android:autofillHints="@string/search_movie_title"
+        android:layout_width="285dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/search_movie_title"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:inputType="text"
+        android:imeOptions=""
+        android:maxLines="1"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="43dp"
+        android:id="@+id/btnSearch"
+        android:text="@string/search"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/searchBar"
+        android:background="@android:color/darker_gray"
+        tools:listitem="@layout/card_view" />
+
+</RelativeLayout>
