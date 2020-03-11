@@ -19,22 +19,4 @@ interface ApiServiceInterface {
     @GET("/?apikey=e1e2d348&")
     fun getFullMovie(@Query("i")imdbID: String) : Observable<Movie>
 
-    companion object Factory{
-        private val BASE_URL = "https://www.omdbapi.com/"
-
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .client(
-                OkHttpClient.Builder()
-                    .readTimeout(120, TimeUnit.SECONDS)
-                    .connectTimeout(120,TimeUnit.SECONDS)
-                    .build()
-            ).build()
-
-        fun create(): ApiServiceInterface{
-            return retrofit.create(ApiServiceInterface::class.java)
-        }
-    }
 }

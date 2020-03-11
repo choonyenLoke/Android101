@@ -6,6 +6,7 @@ class BaseContract {
         fun subscribe()
         fun unsubscribe()
         fun attach(view: T)
+        fun detach()
     }
 
     interface View{

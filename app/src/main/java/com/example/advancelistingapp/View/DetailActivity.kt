@@ -35,47 +35,49 @@ class DetailActivity : AppCompatActivity() {
 
             val rate: SpannedString = buildSpannedString {
                 append(rating)
-                append("/10.0")
+                append(getString(R.string.percen))
             }
+
             val vote: SpannedString = buildSpannedString {
                 bold {
-                    append("Votes: ")
+                    append(getString(R.string.b_vote))
                 }
                 append(votes)
             }
+
             val directors: SpannedString = buildSpannedString {
                 bold{
-                    append("Director/s: ")
+                    append(getString(R.string.b_director))
                 }
                 append(director)
             }
             val actors: SpannedString = buildSpannedString {
                 bold {
-                    append("Actors:\n")
+                    append(getString(R.string.b_actors))
                 }
                 append(actor)
             }
             val date: SpannedString = buildSpannedString {
                 bold {
-                    append("Date Released:\n")
+                    append(getString(R.string.b_date))
                 }
                 append(release)
             }
             val lang: SpannedString = buildSpannedString {
                 bold {
-                    append("Language:\n")
+                    append(getString(R.string.b_lang))
                 }
                 append(language)
             }
             val runtime: SpannedString = buildSpannedString {
                 bold {
-                    append("Run Time: ")
+                    append(getString(R.string.b_run))
                 }
                 append(runTime)
             }
             val types: SpannedString = buildSpannedString {
                 bold {
-                    append("Type: ")
+                    append(getString(R.string.b_type))
                 }
                 append(type)
             }

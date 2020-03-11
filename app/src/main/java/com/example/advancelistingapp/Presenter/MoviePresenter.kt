@@ -1,7 +1,9 @@
 package com.example.advancelistingapp.Presenter
 
 import android.util.Log
+import android.view.ViewGroup
 import com.example.advancelistingapp.Api.ApiServiceInterface
+import com.example.advancelistingapp.Api.RetrofitService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -9,8 +11,8 @@ import io.reactivex.schedulers.Schedulers
 class MoviePresenter: MovieContract.Presenter {
 
     private val subscription = CompositeDisposable()
-    private lateinit var view: MovieContract.View
-    private val apiService: ApiServiceInterface = ApiServiceInterface.create()
+    private var view: MovieContract.View? = null
+    private val apiService: ApiServiceInterface = RetrofitService.create()
 
 
     override fun getAllMovie(searchKey: String) {
@@ -19,10 +21,10 @@ class MoviePresenter: MovieContract.Presenter {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 Log.d("DOMAIN", it.toString())
-                view.onSuccess(it)
+                view?.onSuccess(it)
             },{ error ->
                 val msg = error.localizedMessage
-                view.onError(msg)
+                view?.onError(msg)
             })
         subscription.add(subscribe)
     }
@@ -33,11 +35,11 @@ class MoviePresenter: MovieContract.Presenter {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 Log.d("DOMAIN", it.toString())
-                view.onFullSuccess(it)
+                view?.onFullSuccess(it)
             },{
                 error ->
                 val msg = error.localizedMessage
-                view.onFullError(msg)
+                view?.onFullError(msg)
             })
         subscription.add(subscribe)
     }
@@ -53,4 +55,9 @@ class MoviePresenter: MovieContract.Presenter {
     override fun attach(view: MovieContract.View) {
         this.view = view
     }
+
+    override fun detach() {
+        view = null
+    }
+
 }

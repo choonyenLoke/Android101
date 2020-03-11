@@ -1,9 +1,14 @@
 package com.example.advancelistingapp.View
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.content.getSystemService
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.advancelistingapp.DependencyInjection.DaggerMovieComponent
@@ -28,20 +33,39 @@ class MainActivity : AppCompatActivity(), MovieAdapter.MovieListener, MovieContr
         setContentView(R.layout.activity_main)
         injectDependency()
         presenter.attach(this)
+        welc_msg.visibility = View.VISIBLE
         initView()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.detach()
+
     }
 
     private fun initView(){
         btnSearch.setOnClickListener{
-            movieList = mutableListOf()
+            presenter.unsubscribe()
+            progress_bar.visibility = View.VISIBLE
+            recyclerview.visibility = View.INVISIBLE
+            welc_msg.visibility = View.GONE
+            error_msg.visibility = View.INVISIBLE
+            hideKeyboard(it)
             val key = searchBar.text.toString()
+            movieList = mutableListOf()
             if(key.isEmpty()){
                 Toast.makeText(this, "Search Bar cannot be empty!!!", Toast.LENGTH_LONG).show()
             }
             else{
                 presenter.getAllMovie(key)
+                searchBar.setText("")
             }
         }
+    }
+
+    fun Context.hideKeyboard(view:View){
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     private fun injectDependency(){
@@ -59,7 +83,9 @@ class MainActivity : AppCompatActivity(), MovieAdapter.MovieListener, MovieContr
     }
 
     override fun onError(msg: String?) {
-        Toast.makeText(this, "Movie Not Found!!!", Toast.LENGTH_LONG).show()
+        progress_bar.visibility = View.GONE
+        welc_msg.visibility = View.GONE
+        error_msg.visibility = View.VISIBLE
     }
 
     override fun onFullSuccess(data: Movie) {
@@ -68,6 +94,9 @@ class MainActivity : AppCompatActivity(), MovieAdapter.MovieListener, MovieContr
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
         recyclerview.layoutManager = layoutManager
         recyclerview.adapter = movieAdapter
+        progress_bar.visibility = View.GONE
+        recyclerview.visibility = View.VISIBLE
+
     }
 
     override fun onFullError(msg: String?) {
