@@ -15,4 +15,14 @@
     <string name="plot">Plot</string>
     <string name="search_movie_title">Search Movie Title</string>
     <string name="search">Search</string>
+    <string name="percen">/10.0</string>
+    <string name="b_vote"><b>Votes: </b></string>
+    <string name="b_director"><b>Director/s: </b></string>
+    <string name="b_actors"><b>Actors:\n</b></string>
+    <string name="b_date"><b>Date Released:\n</b></string>
+    <string name="b_lang"><b>Language:\n</b></string>
+    <string name="b_run"><b>Run Time: </b></string>
+    <string name="b_type"><b>Type: </b></string>
+    <string name="movie_not_found">Movie Not Found!!!</string>
+    <string name="please_key_in_to_search_movie">Please key in to search Movie</string>
 </resources>
