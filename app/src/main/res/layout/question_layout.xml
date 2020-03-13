@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_height="60dp"
+        android:layout_width="match_parent">
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:toolbarId="@+id/toolbar"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:contentScrim="?attr/colorPrimary">
+
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_width="match_parent">
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="678dp"
+        android:layout_marginTop="-35dp"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/const_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/left_guideline"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.075" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/right_guideline"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.925" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/mid_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view"
+                android:layout_width="350dp"
+                android:layout_height="300dp"
+                app:cardCornerRadius="1dp"
+                app:layout_constraintLeft_toLeftOf="@id/left_guideline"
+                app:layout_constraintRight_toRightOf="@id/right_guideline"
+                app:layout_constraintTop_toTopOf="@id/const_layout">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/question"
+                        android:id="@+id/label_question"
+                        android:textSize="15sp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/btn_rounded"
+                        android:text="@string/difficulty"
+                        android:textSize="8sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="15dp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/question"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/label_question"
+                        android:text="@string/question"/>
+
+
+
+                    <ProgressBar
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginBottom="15dp"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/btn_first"
+                android:layout_width="140dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginRight="15dp"
+                android:text="@string/answer_1"
+                app:layout_constraintLeft_toLeftOf="@id/left_guideline"
+                app:layout_constraintRight_toRightOf="@id/mid_guideline"
+                app:layout_constraintTop_toBottomOf="@id/card_view" />
+
+            <Button
+                android:id="@+id/btn_second"
+                android:layout_width="140dp"
+                android:layout_height="100dp"
+                android:layout_margin="15dp"
+                android:text="@string/answer_2"
+                app:layout_constraintLeft_toLeftOf="@id/left_guideline"
+                app:layout_constraintRight_toRightOf="@id/mid_guideline"
+                app:layout_constraintTop_toBottomOf="@id/btn_first" />
+
+            <Button
+                android:id="@+id/btn_third"
+                android:layout_width="140dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginRight="15dp"
+                android:text="@string/answer_3"
+                app:layout_constraintLeft_toLeftOf="@id/mid_guideline"
+                app:layout_constraintRight_toRightOf="@id/right_guideline"
+                app:layout_constraintTop_toBottomOf="@id/card_view" />
+
+            <Button
+                android:id="@+id/btn_forth"
+                android:layout_width="140dp"
+                android:layout_height="100dp"
+                android:layout_margin="15dp"
+                android:text="@string/answer_4"
+                app:layout_constraintLeft_toLeftOf="@id/mid_guideline"
+                app:layout_constraintRight_toRightOf="@id/right_guideline"
+                app:layout_constraintTop_toBottomOf="@id/btn_third" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/roll_another"
+        android:id="@+id/btnRoll"
+        android:layout_gravity="bottom"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
