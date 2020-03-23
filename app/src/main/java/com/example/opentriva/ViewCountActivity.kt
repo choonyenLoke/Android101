@@ -34,7 +34,7 @@ class ViewCountActivity : AppCompatActivity() {
         questionViewModel = ViewModelProvider(this).get(QuestionViewModel::class.java)
 
         questionViewModel.getAllCategory()
-        questionViewModel.categoryList.observe(this, Observer {
+        questionViewModel.catList.observe(this, Observer {
             for(category in it.triviaCategories){
                 questionViewModel.getAllCount(category.id)
                 onCategorySuccess(category)
@@ -56,7 +56,6 @@ class ViewCountActivity : AppCompatActivity() {
 
     private fun onCountSuccess(data: Count) {
         countList.add(data)
-
     }
 
 }

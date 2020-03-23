@@ -49,10 +49,12 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         questionViewModel = ViewModelProvider(this).get(QuestionViewModel::class.java)
-        questionViewModel.getToken()
+        questionViewModel.getNewToken()
         questionViewModel.token.observe(this, androidx.lifecycle.Observer {
-            token = it.token
-            getQuestion(token.toString(), category, difficulty, type)
+            if(it.responseCode == 0){
+                token = it.token
+                getQuestion(token.toString(), category, difficulty, type)
+            }
         })
 
         btnRoll.setOnClickListener {
@@ -98,17 +100,21 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun onSuccess(data: Result) {
         if(data.responseCode.compareTo(4) == 0) {
-            Toast.makeText(this, "Reach", Toast.LENGTH_LONG).show()
             questionViewModel.resetToken(token.toString())
-            Toast.makeText(this, "Reset", Toast.LENGTH_LONG).show()
-            getQuestion(token.toString(), category, difficulty, type)
-            Toast.makeText(this, "Try", Toast.LENGTH_LONG).show()
+            questionViewModel.resetToken.observe(this, androidx.lifecycle.Observer {
+                if(it.responseCode == 0){
+                    token = it.token
+                    getQuestion(it.token, category,difficulty,type)
+                }
+            })
         }
         else if(data.responseCode.compareTo(3) == 0) {
-            questionViewModel.getToken()
+            questionViewModel.getNewToken()
             questionViewModel.token.observe(this, androidx.lifecycle.Observer {
-                token = it.token
-                getQuestion(token.toString(), category, difficulty, type)
+                if(it.responseCode == 0){
+                    token = it.token
+                    getQuestion(it.token, category, difficulty, type)
+                }
             })
         }
         else if(data.responseCode.compareTo(0) == 0)

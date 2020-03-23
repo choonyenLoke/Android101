@@ -18,8 +18,6 @@ import kotlinx.android.synthetic.main.configure_question.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val subscription = CompositeDisposable()
-    private val apiService: ApiServiceInterface = RetrofitService.create()
     private lateinit var categoryList: List<TriviaCategory>
     private var selectedCategoryId: Int = 0
 
@@ -51,18 +49,17 @@ class MainActivity : AppCompatActivity() {
                     selectedCategoryId = 0
                 }
             }
-
             intent.putExtra("Category", selectedCategoryId)
             intent.putExtra("Difficulty", selectedDifficulty)
             intent.putExtra("Type", selectedType)
-
             startActivity(intent)
         }
         questionViewModel = ViewModelProvider(this).get(QuestionViewModel::class.java)
         questionViewModel.getAllCategory()
-        questionViewModel.categoryList.observe(this, Observer {
+        questionViewModel.catList.observe(this, Observer {
             onCategorySuccess(it)
         })
+
     }
 
     private fun populateData(){
