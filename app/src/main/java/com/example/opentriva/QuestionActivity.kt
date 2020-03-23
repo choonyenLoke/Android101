@@ -35,6 +35,11 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.question_layout)
+
+        val actionbar = supportActionBar
+        actionbar?.title = "Open Trivia DB"
+        actionbar?.setDisplayHomeAsUpEnabled(true)
+
         btnDifficulty.visibility = View.INVISIBLE
         btn_first.visibility = View.INVISIBLE
         btn_second.visibility = View.INVISIBLE
@@ -111,10 +116,8 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
         else if(data.responseCode.compareTo(3) == 0) {
             questionViewModel.getNewToken()
             questionViewModel.token.observe(this, androidx.lifecycle.Observer {
-                if(it.responseCode == 0){
-                    token = it.token
-                    getQuestion(it.token, category, difficulty, type)
-                }
+                token = it.token
+                getQuestion(token.toString(), category, difficulty, type)
             })
         }
         else if(data.responseCode.compareTo(0) == 0)

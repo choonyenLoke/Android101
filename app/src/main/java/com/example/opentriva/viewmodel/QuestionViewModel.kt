@@ -54,7 +54,9 @@ class QuestionViewModel(application: Application): AndroidViewModel(application)
         val dispose = subscribe.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                token.value = it
+                if(it.responseCode == 0){
+                    token.value = it
+                }
             },{
                     error ->
                 Toast.makeText(getApplication(), error.localizedMessage, Toast.LENGTH_LONG).show()
@@ -81,7 +83,9 @@ class QuestionViewModel(application: Application): AndroidViewModel(application)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                  //Do any logic in here
-                resetToken.value = it
+                if(it.responseCode == 0){
+                    resetToken.value = it
+                }
             },{
                     error ->
                 Toast.makeText(getApplication(), error.localizedMessage, Toast.LENGTH_LONG).show()
