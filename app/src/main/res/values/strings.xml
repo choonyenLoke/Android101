@@ -3,7 +3,7 @@
     <string name="next">NEXT</string>
     <string name="view_question_count">View Question Count</string>
     <string name="configure_your_option_to_get_started">Configure your option to get started</string>
-    <string name="select_category">Select category:</string>
+    <string name="select_category">Select Category:</string>
     <string name="select_difficulty">Select Difficulty:</string>
     <string name="select_type">Select Type:</string>
     <string name="question">Question:</string>
@@ -13,7 +13,7 @@
     <string name="easy">Easy:</string>
     <string name="medium">Medium:</string>
     <string name="hard">Hard:</string>
-    <string name="test_number">1234567890</string>
+    <string name="test_number">123</string>
     <string name="roll_another">ROLL ANOTHER</string>
     <string name="answer_4">Answer 4</string>
     <string name="answer_3">Answer 3</string>

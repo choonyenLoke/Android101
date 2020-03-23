@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="SpinnerTheme" parent="@android:style/Widget.TextView.SpinnerItem">
+        <item name="android:textSize">8sp</item>
+        <item name="android:textColor">#C0C0C0</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
 </resources>

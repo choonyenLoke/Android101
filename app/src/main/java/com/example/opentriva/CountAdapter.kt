@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.opentriva.Model.Count
+import com.example.opentriva.model.Count
+import com.example.opentriva.model.TriviaCategory
 import kotlinx.android.synthetic.main.card_view.view.*
 
-class CountAdapter(private val mContext: Context, private var countList: MutableList<Count>)
+class CountAdapter(private val mContext: Context, private var countList: MutableList<Count>, private var categoryList: MutableList<TriviaCategory>)
     :RecyclerView.Adapter<CountAdapter.ViewHolder>()
 {
 
@@ -16,10 +17,15 @@ class CountAdapter(private val mContext: Context, private var countList: Mutable
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun bind(count: Count){
-            itemView.easy_text.text = count.category_question_count.total_easy_question_count.toString()
-            itemView.medium_text.text = count.category_question_count.total_medium_question_count.toString()
-            itemView.hard_text.text = count.category_question_count.total_hard_question_count.toString()
-            itemView.totalQuestion.text = count.category_question_count.total_question_count.toString()
+            for(item in categoryList){
+                if(count.categoryId.compareTo(item.id) == 0){
+                    itemView.category_label.text = item.name
+                }
+            }
+            itemView.easy_text.text = context.getString(R.string.easy) + " " +count.categoryQuestionCount.easyCount
+            itemView.medium_text.text = context.getString(R.string.medium) + " " + count.categoryQuestionCount.mediumCount.toString()
+            itemView.hard_text.text = context.getString(R.string.hard) + " " + count.categoryQuestionCount.hardCount.toString()
+            itemView.totalQuestion.text = count.categoryQuestionCount.totalCount.toString()
         }
     }
 
