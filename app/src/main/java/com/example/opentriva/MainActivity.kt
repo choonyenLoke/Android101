@@ -12,6 +12,7 @@ import com.example.opentriva.apiservice.ApiServiceInterface
 import com.example.opentriva.apiservice.RetrofitService
 import com.example.opentriva.model.Category
 import com.example.opentriva.model.TriviaCategory
+import com.example.opentriva.viewmodel.CategoryViewModel
 import com.example.opentriva.viewmodel.QuestionViewModel
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.configure_question.*
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var categoryList: List<TriviaCategory>
     private var selectedCategoryId: Int = 0
 
-    private lateinit var questionViewModel: QuestionViewModel
+    private lateinit var categoryViewModel: CategoryViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,9 +55,9 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("Type", selectedType)
             startActivity(intent)
         }
-        questionViewModel = ViewModelProvider(this).get(QuestionViewModel::class.java)
-        questionViewModel.getAllCategory()
-        questionViewModel.catList.observe(this, Observer {
+        categoryViewModel = ViewModelProvider(this).get(CategoryViewModel::class.java)
+        categoryViewModel.getAllCategory()
+        categoryViewModel.catList.observe(this, Observer {
             onCategorySuccess(it)
         })
 

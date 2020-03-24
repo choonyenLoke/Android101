@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.opentriva.apiservice.ApiServiceInterface
 import com.example.opentriva.apiservice.RetrofitService
 import com.example.opentriva.model.*
+import com.example.opentriva.viewmodel.CountViewModel
 import com.example.opentriva.viewmodel.QuestionViewModel
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.question_count.*
@@ -22,7 +23,7 @@ class ViewCountActivity : AppCompatActivity() {
     var categoryList = mutableListOf<TriviaCategory>()
     private var countAdapter: CountAdapter? = null
 
-    private lateinit var questionViewModel: QuestionViewModel
+    private lateinit var countViewModel: CountViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,16 +32,16 @@ class ViewCountActivity : AppCompatActivity() {
         actionbar?.title = "Question Category"
         actionbar?.setDisplayHomeAsUpEnabled(true)
 
-        questionViewModel = ViewModelProvider(this).get(QuestionViewModel::class.java)
+        countViewModel = ViewModelProvider(this).get(CountViewModel::class.java)
 
-        questionViewModel.getAllCategory()
-        questionViewModel.catList.observe(this, Observer {
+        countViewModel.getCategory()
+        countViewModel.catList.observe(this, Observer {
             for(category in it.triviaCategories){
-                questionViewModel.getAllCount(category.id)
+                countViewModel.getCount(category.id)
                 onCategorySuccess(category)
             }
         })
-        questionViewModel.countList.observe(this, Observer {
+        countViewModel.countList.observe(this, Observer {
             onCountSuccess(it)
             countAdapter = CountAdapter(this, countList, categoryList)
             val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)

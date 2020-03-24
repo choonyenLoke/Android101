@@ -23,6 +23,7 @@ interface ApiServiceInterface {
         @Query("difficulty")difficult: String?,
         @Query("type")type: String?): Observable<Result>
 
+    //https://opentdb.com/api_token.php?command=reset&token=YOURTOKENHERE
     @GET("/api_token.php?command=reset")
     fun reset(@Query("token")token: String): Observable<ResetToken>
 

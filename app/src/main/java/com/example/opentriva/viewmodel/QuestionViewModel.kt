@@ -2,52 +2,24 @@ package com.example.opentriva.viewmodel
 
 import android.app.Application
 import android.widget.Toast
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
+import com.example.opentriva.QuestionActivity
 import com.example.opentriva.model.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import org.koin.dsl.koinApplication
 
 class QuestionViewModel(application: Application): AndroidViewModel(application) {
 
-    private val repository: QuestionRepository =
-        QuestionRepository(application)
+    private val repository = QuestionRepository()
     private val subscription = CompositeDisposable()
 
-    var catList =  MutableLiveData<Category>()
-    var countList = MutableLiveData<Count>()
-    var token = MutableLiveData<Token>()
+    private val app = application
+
+    var tokenNew = MutableLiveData<Token>()
     var questionResult = MutableLiveData<Result>()
     var resetToken = MutableLiveData<ResetToken>()
-
-
-    fun getAllCategory(){
-        val subscribe = repository.getAllCategory()
-        val dispose = subscribe.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                catList.value = it
-            },{
-                    error ->
-                Toast.makeText(getApplication(), error.localizedMessage, Toast.LENGTH_LONG).show()
-            })
-        subscription.add(dispose)
-    }
-
-    fun getAllCount(id: Int){
-        val subscribe = repository.getAllCount(id)
-        val dispose = subscribe.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                countList.value = it
-            },{
-                    error ->
-                Toast.makeText(getApplication(), error.localizedMessage, Toast.LENGTH_LONG).show()
-            })
-        subscription.add(dispose)
-    }
 
     fun getNewToken(){
         val subscribe =  repository.getToken()
@@ -55,11 +27,14 @@ class QuestionViewModel(application: Application): AndroidViewModel(application)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 if(it.responseCode == 0){
-                    token.value = it
+                    tokenNew.value = it
+                }
+                else {
+                    Toast.makeText(app, "Error", Toast.LENGTH_LONG).show()
                 }
             },{
                     error ->
-                Toast.makeText(getApplication(), error.localizedMessage, Toast.LENGTH_LONG).show()
+                Toast.makeText(app, error.localizedMessage, Toast.LENGTH_LONG).show()
             })
         subscription.add(dispose)
     }
@@ -72,7 +47,7 @@ class QuestionViewModel(application: Application): AndroidViewModel(application)
                 questionResult.value = it
             },{
                     error ->
-                Toast.makeText(getApplication(), error.localizedMessage, Toast.LENGTH_LONG).show()
+                Toast.makeText(app, error.localizedMessage, Toast.LENGTH_LONG).show()
             })
         subscription.add(dispose)
     }
@@ -85,11 +60,45 @@ class QuestionViewModel(application: Application): AndroidViewModel(application)
                  //Do any logic in here
                 if(it.responseCode == 0){
                     resetToken.value = it
+                    //Toast.makeText(app, "Reset", Toast.LENGTH_LONG).show()
+                }
+                else
+                {
+                    resetToken(it.token)
                 }
             },{
                     error ->
-                Toast.makeText(getApplication(), error.localizedMessage, Toast.LENGTH_LONG).show()
+                Toast.makeText(app, error.localizedMessage, Toast.LENGTH_LONG).show()
             })
         subscription.add(dispose)
+    }
+
+    fun getQuestion(token: String, categoryId: Int?, difficulty: String?, type: String?){
+
+        var category: Int?
+        var paraDifficult: String?
+        var paraType: String?
+
+        if (categoryId != 0) {
+            category = categoryId
+        }
+        else {
+            category = null
+        }
+        if (difficulty == "default") {
+            paraDifficult = null
+        }
+        else {
+            paraDifficult = difficulty
+        }
+        if (type == "default") {
+            paraType = null
+        }
+        else {
+            paraType = type
+        }
+
+        getQuestionParams(token, category, paraDifficult, paraType)
+
     }
 }

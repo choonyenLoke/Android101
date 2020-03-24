@@ -6,7 +6,7 @@ import com.example.opentriva.apiservice.RetrofitService
 import com.example.opentriva.model.*
 import io.reactivex.Observable
 
-class QuestionRepository(val application: Application) {
+class QuestionRepository() {
 
     private val apiService: ApiServiceInterface = RetrofitService.create()
 
