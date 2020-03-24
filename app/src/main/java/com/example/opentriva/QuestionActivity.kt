@@ -54,23 +54,7 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
             tokenInit = it.token
             questionViewModel.getQuestion(tokenInit.toString(), category, difficulty, type)
             questionViewModel.questionResult.observe(this, androidx.lifecycle.Observer {
-                if(it.responseCode == 0){
-                    onSuccess(it)
-                }
-                else if(it.responseCode == 3){
-                    questionViewModel.getNewToken()
-                    questionViewModel.tokenNew.observe(this, androidx.lifecycle.Observer {
-                        tokenInit = it.token
-                    })
-                    questionViewModel.getQuestion(tokenInit.toString(), category, difficulty, type)
-                }
-                else if(it.responseCode == 4){
-                    questionViewModel.resetToken(tokenInit.toString())
-                    questionViewModel.resetToken.observe(this, androidx.lifecycle.Observer {
-                        tokenInit = it.token
-                    })
-                    questionViewModel.getQuestion(tokenInit.toString(), category, difficulty, type)
-                }
+                onSuccess(it)
             })
         })
 
@@ -114,7 +98,7 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
             btn_third.visibility = View.VISIBLE
             btn_forth.visibility = View.VISIBLE
 
-            var answerList = mutableListOf<String>()
+            val answerList = mutableListOf<String>()
             correct = Html.fromHtml(data.results[0].correctAnswer, Html.FROM_HTML_MODE_COMPACT)
             answerList.add(data.results[0].correctAnswer)
             answerList.add(data.results[0].incorrectAnswers[0])
@@ -141,7 +125,7 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
             btn_third.visibility = View.INVISIBLE
             btn_forth.visibility = View.INVISIBLE
             correct = Html.fromHtml(data.results[0].correctAnswer, Html.FROM_HTML_MODE_COMPACT)
-            var booleanList = mutableListOf<String>()
+            val booleanList = mutableListOf<String>()
             booleanList.add(data.results[0].correctAnswer)
             booleanList.add(data.results[0].incorrectAnswers[0])
 
@@ -154,64 +138,51 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        if(v?.id == R.id.btn_first){
-            if(btn_first.text == correct){
-                btn_first.setBackgroundColor(Color.GREEN)
+        when (v?.id) {
+            R.id.btn_first -> {
                 btn_second.setBackgroundColor(Color.WHITE)
                 btn_third.setBackgroundColor(Color.WHITE)
                 btn_forth.setBackgroundColor(Color.WHITE)
+
+                if(btn_first.text == correct){
+                    btn_first.setBackgroundColor(Color.GREEN)
+                } else{
+                    btn_first.setBackgroundColor(Color.RED)
+                }
             }
-            else{
-                btn_first.setBackgroundColor(Color.RED)
-                btn_second.setBackgroundColor(Color.WHITE)
-                btn_third.setBackgroundColor(Color.WHITE)
-                btn_forth.setBackgroundColor(Color.WHITE)
-            }
-        }
-        else if(v?.id == R.id.btn_second){
-            if(btn_second.text == correct){
-                btn_second.setBackgroundColor(Color.GREEN)
+            R.id.btn_second -> {
                 btn_first.setBackgroundColor(Color.WHITE)
                 btn_third.setBackgroundColor(Color.WHITE)
                 btn_forth.setBackgroundColor(Color.WHITE)
+
+                if(btn_second.text == correct){
+                    btn_second.setBackgroundColor(Color.GREEN)
+                } else{
+                    btn_second.setBackgroundColor(Color.RED)
+                }
             }
-            else{
-                btn_second.setBackgroundColor(Color.RED)
-                btn_first.setBackgroundColor(Color.WHITE)
-                btn_third.setBackgroundColor(Color.WHITE)
-                btn_forth.setBackgroundColor(Color.WHITE)
-            }
-        }
-        else if(v?.id == R.id.btn_third){
-            if(btn_third.text == correct){
-                btn_third.setBackgroundColor(Color.GREEN)
+            R.id.btn_third -> {
                 btn_first.setBackgroundColor(Color.WHITE)
                 btn_second.setBackgroundColor(Color.WHITE)
                 btn_forth.setBackgroundColor(Color.WHITE)
+
+                if(btn_third.text == correct){
+                    btn_third.setBackgroundColor(Color.GREEN)
+                } else {
+                    btn_third.setBackgroundColor(Color.RED)
+                }
             }
-            else
-            {
-                btn_third.setBackgroundColor(Color.RED)
-                btn_first.setBackgroundColor(Color.WHITE)
-                btn_second.setBackgroundColor(Color.WHITE)
-                btn_forth.setBackgroundColor(Color.WHITE)
-            }
-        }
-        else if(v?.id == R.id.btn_forth){
-            if(btn_forth.text == correct){
-                btn_forth.setBackgroundColor(Color.GREEN)
+            R.id.btn_forth -> {
                 btn_first.setBackgroundColor(Color.WHITE)
                 btn_second.setBackgroundColor(Color.WHITE)
                 btn_third.setBackgroundColor(Color.WHITE)
-            }
-            else {
-                btn_forth.setBackgroundColor(Color.RED)
-                btn_first.setBackgroundColor(Color.WHITE)
-                btn_second.setBackgroundColor(Color.WHITE)
-                btn_third.setBackgroundColor(Color.WHITE)
+
+                if(btn_forth.text == correct){
+                    btn_forth.setBackgroundColor(Color.GREEN)
+                } else {
+                    btn_forth.setBackgroundColor(Color.RED)
+                }
             }
         }
     }
-
-
 }

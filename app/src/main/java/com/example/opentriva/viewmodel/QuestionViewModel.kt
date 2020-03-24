@@ -17,6 +17,8 @@ class QuestionViewModel(application: Application): AndroidViewModel(application)
 
     private val app = application
 
+    var tokenInit: String? = null
+
     var tokenNew = MutableLiveData<Token>()
     var questionResult = MutableLiveData<Result>()
     var resetToken = MutableLiveData<ResetToken>()
@@ -27,6 +29,7 @@ class QuestionViewModel(application: Application): AndroidViewModel(application)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 if(it.responseCode == 0){
+                    tokenInit = it.token
                     tokenNew.value = it
                 }
                 else {
@@ -44,7 +47,19 @@ class QuestionViewModel(application: Application): AndroidViewModel(application)
         val dispose = subscribe.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                questionResult.value = it
+                if(it.responseCode == 0){
+                    questionResult.value = it
+                }
+                else if(it.responseCode == 3)
+                {
+                    getNewToken()
+                    getQuestion(tokenInit.toString(), categoryId, difficulty, type)
+                }
+                else if(it.responseCode == 4){
+                    resetToken(token)
+                    getQuestion(token, categoryId,difficulty, type)
+                }
+
             },{
                     error ->
                 Toast.makeText(app, error.localizedMessage, Toast.LENGTH_LONG).show()
@@ -75,9 +90,9 @@ class QuestionViewModel(application: Application): AndroidViewModel(application)
 
     fun getQuestion(token: String, categoryId: Int?, difficulty: String?, type: String?){
 
-        var category: Int?
-        var paraDifficult: String?
-        var paraType: String?
+        val category: Int?
+        val paraDifficult: String?
+        val paraType: String?
 
         if (categoryId != 0) {
             category = categoryId
