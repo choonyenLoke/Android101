@@ -92,7 +92,7 @@
                         android:layout_height="20dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="15dp"
-                        android:background="@drawable/btn_rounded"
+                        android:background="@drawable/btn_easy"
                         android:text="@string/difficulty"
                         android:textSize="8sp"
                         app:layout_constraintRight_toRightOf="parent"
@@ -126,7 +126,7 @@
             <Button
                 android:id="@+id/btn_first"
                 android:layout_width="140dp"
-                android:layout_height="100dp"
+                android:layout_height="130dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="60dp"
                 android:layout_marginRight="15dp"
@@ -139,7 +139,7 @@
             <Button
                 android:id="@+id/btn_third"
                 android:layout_width="140dp"
-                android:layout_height="100dp"
+                android:layout_height="130dp"
                 android:layout_margin="15dp"
                 android:text="@string/answer_3"
                 android:textAllCaps="false"
@@ -150,7 +150,7 @@
             <Button
                 android:id="@+id/btn_second"
                 android:layout_width="140dp"
-                android:layout_height="100dp"
+                android:layout_height="130dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="60dp"
                 android:layout_marginRight="15dp"
@@ -163,7 +163,7 @@
             <Button
                 android:id="@+id/btn_forth"
                 android:layout_width="140dp"
-                android:layout_height="100dp"
+                android:layout_height="130dp"
                 android:layout_margin="15dp"
                 android:text="@string/answer_4"
                 android:textAllCaps="false"

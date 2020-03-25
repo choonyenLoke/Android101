@@ -7,18 +7,18 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.opentriva.model.Category
 import com.example.opentriva.model.TriviaCategory
 import com.example.opentriva.viewmodel.CategoryViewModel
 import kotlinx.android.synthetic.main.configure_question.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var categoryList: List<TriviaCategory>
     private var selectedCategoryId: Int = 0
 
-    private lateinit var categoryViewModel: CategoryViewModel
+    private val categoryViewModel: CategoryViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +51,6 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("Type", selectedType)
             startActivity(intent)
         }
-        categoryViewModel = ViewModelProvider(this).get(CategoryViewModel::class.java)
         categoryViewModel.getAllCategory()
         categoryViewModel.catList.observe(this, Observer {
             onCategorySuccess(it)

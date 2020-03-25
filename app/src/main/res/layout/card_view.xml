@@ -112,7 +112,7 @@
                 android:autoSizeTextType="uniform"
                 android:gravity="center"
                 android:text="@string/test_number"
-                android:textColor="@color/btnRed"
+                android:textColor="@color/red"
                 app:layout_constraintLeft_toLeftOf="@id/right_mid"
                 app:layout_constraintRight_toRightOf="@id/medium_text"
                 app:layout_constraintTop_toTopOf="@id/easy_text" />

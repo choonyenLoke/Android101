@@ -8,7 +8,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class QuestionViewModel(application: Application): AndroidViewModel(application) {
+class QuestionViewModel(application: Application): ViewModel() {
 
     private val repository = QuestionRepository()
     private val subscription = CompositeDisposable()

@@ -11,9 +11,9 @@ import com.example.opentriva.apiservice.ApiServiceInterface
 import com.example.opentriva.apiservice.RetrofitService
 import com.example.opentriva.model.*
 import com.example.opentriva.viewmodel.CountViewModel
-import com.example.opentriva.viewmodel.QuestionViewModel
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.question_count.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ViewCountActivity : AppCompatActivity() {
 
@@ -23,7 +23,7 @@ class ViewCountActivity : AppCompatActivity() {
     var categoryList = mutableListOf<TriviaCategory>()
     private var countAdapter: CountAdapter? = null
 
-    private lateinit var countViewModel: CountViewModel
+    private val countViewModel: CountViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +31,6 @@ class ViewCountActivity : AppCompatActivity() {
         val actionbar = supportActionBar
         actionbar?.title = "Question Category"
         actionbar?.setDisplayHomeAsUpEnabled(true)
-
-        countViewModel = ViewModelProvider(this).get(CountViewModel::class.java)
 
         countViewModel.getCategory()
         countViewModel.catList.observe(this, Observer {

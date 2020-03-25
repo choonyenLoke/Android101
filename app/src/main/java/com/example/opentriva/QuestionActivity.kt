@@ -7,15 +7,12 @@ import android.os.Bundle
 import android.text.Html
 import android.text.Spanned
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.example.opentriva.apiservice.ApiServiceInterface
-import com.example.opentriva.apiservice.RetrofitService
 import com.example.opentriva.model.Result
 import com.example.opentriva.viewmodel.QuestionViewModel
 import com.google.android.material.snackbar.Snackbar
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.question_layout.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 class QuestionActivity : AppCompatActivity(), View.OnClickListener {
@@ -27,7 +24,7 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
 
     var correct: Spanned? = null
 
-    private lateinit var questionViewModel: QuestionViewModel
+    private val questionViewModel: QuestionViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +47,6 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
             type = it.getStringExtra("Type")?.toLowerCase(Locale.ROOT)
         }
 
-        questionViewModel = ViewModelProvider(this).get(QuestionViewModel::class.java)
         questionViewModel.getNewToken()
         questionViewModel.tokenNew.observe(this, androidx.lifecycle.Observer {
             tokenInit = it.token
@@ -60,14 +56,14 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
             })
             questionViewModel.status.observe(this, androidx.lifecycle.Observer {
                 if(it == false){
+                    load_question.visibility = View.GONE
                     val rootView = findViewById<View>(R.id.rootView)
-                    val snack = Snackbar.make(rootView,"No Result Found, Please Refine Criteria.", Snackbar.LENGTH_LONG)
+                    val snack = Snackbar.make(rootView,"No Result Found, Please Refine Criteria.", Snackbar.LENGTH_INDEFINITE)
                     snack.setAction("BACK") {
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                     }
                     snack.show()
-
                 }
             })
         })
@@ -95,13 +91,13 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
         btnDifficulty.text = Html.fromHtml(data.results[0].difficulty, Html.FROM_HTML_MODE_COMPACT)
 
         if(btnDifficulty.text == Html.fromHtml("easy", Html.FROM_HTML_MODE_COMPACT) ){
-            btnDifficulty.setBackgroundColor(Color.GREEN)
+            btnDifficulty.setBackgroundResource(R.drawable.btn_easy)
         }
         else if(btnDifficulty.text == Html.fromHtml("medium", Html.FROM_HTML_MODE_COMPACT)){
-            btnDifficulty.setBackgroundColor(Color.YELLOW)
+            btnDifficulty.setBackgroundResource(R.drawable.btn_medium)
         }
         else if(btnDifficulty.text == Html.fromHtml("hard", Html.FROM_HTML_MODE_COMPACT)){
-            btnDifficulty.setBackgroundColor(Color.RED)
+            btnDifficulty.setBackgroundResource(R.drawable.btn_hard)
         }
 
         btnDifficulty.visibility = View.VISIBLE
