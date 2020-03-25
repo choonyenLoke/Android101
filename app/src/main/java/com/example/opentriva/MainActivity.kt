@@ -8,13 +8,9 @@ import android.view.View
 import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.opentriva.apiservice.ApiServiceInterface
-import com.example.opentriva.apiservice.RetrofitService
 import com.example.opentriva.model.Category
 import com.example.opentriva.model.TriviaCategory
 import com.example.opentriva.viewmodel.CategoryViewModel
-import com.example.opentriva.viewmodel.QuestionViewModel
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.configure_question.*
 
 class MainActivity : AppCompatActivity() {

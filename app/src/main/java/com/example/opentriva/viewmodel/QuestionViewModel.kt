@@ -3,12 +3,10 @@ package com.example.opentriva.viewmodel
 import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.*
-import com.example.opentriva.QuestionActivity
 import com.example.opentriva.model.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import org.koin.dsl.koinApplication
 
 class QuestionViewModel(application: Application): AndroidViewModel(application) {
 
@@ -22,6 +20,8 @@ class QuestionViewModel(application: Application): AndroidViewModel(application)
     var tokenNew = MutableLiveData<Token>()
     var questionResult = MutableLiveData<Result>()
     var resetToken = MutableLiveData<ResetToken>()
+
+    var status = MutableLiveData<Boolean>()
 
     fun getNewToken(){
         val subscribe =  repository.getToken()
@@ -47,21 +47,38 @@ class QuestionViewModel(application: Application): AndroidViewModel(application)
         val dispose = subscribe.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                if(it.responseCode == 0){
-                    questionResult.value = it
-                }
-                else if(it.responseCode == 3)
-                {
-                    getNewToken()
-                    getQuestion(tokenInit.toString(), categoryId, difficulty, type)
-                }
-                else if(it.responseCode == 4){
-                    resetToken(token)
-                    getQuestion(token, categoryId,difficulty, type)
-                }
-
+                    if(it.responseCode == 0){
+                        questionResult.value = it
+                    }
+                    else if(it.responseCode == 3)
+                    {
+                        getNewToken()
+                        getQuestion(tokenInit.toString(), categoryId, difficulty, type)
+                    }
+                    else if(it.responseCode == 4){
+                        getQuestionWithoutToken(categoryId, difficulty, type)
+                    }
             },{
                     error ->
+                Toast.makeText(app, error.localizedMessage, Toast.LENGTH_LONG).show()
+            })
+        subscription.add(dispose)
+    }
+
+    fun getQuestionWithoutToken(categoryId: Int?, difficult: String?, type: String?){
+        val subscribe = repository.getQuestionWithoutToken(categoryId, difficult, type)
+        val dispose = subscribe.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                if(it.results.isNotEmpty()){
+                    status.value = true
+                    resetToken(tokenInit.toString())
+                    getQuestion(tokenInit.toString(), categoryId,difficult, type)
+                }
+                else {
+                    status.value = false
+                }
+            },{ error ->
                 Toast.makeText(app, error.localizedMessage, Toast.LENGTH_LONG).show()
             })
         subscription.add(dispose)

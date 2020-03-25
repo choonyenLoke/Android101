@@ -22,12 +22,16 @@ class QuestionRepository() {
         return apiService.getToken()
     }
 
-    fun getQuestionParams(token: String, categoryId: Int?, difficulty: String?, type: String?): Observable<Result>{
+    fun getQuestionParams(token: String?, categoryId: Int?, difficulty: String?, type: String?): Observable<Result>{
         return apiService.getDefaultQuestion(token, categoryId, difficulty, type)
     }
 
     fun resetToken(token: String): Observable<ResetToken> {
         return apiService.reset(token)
+    }
+
+    fun getQuestionWithoutToken(categoryId: Int?, difficulty: String?, type: String?): Observable<Result>{
+        return apiService.getQuestionWithoutToken(categoryId, difficulty, type)
     }
 
 }

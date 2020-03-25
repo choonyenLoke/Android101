@@ -18,14 +18,18 @@ interface ApiServiceInterface {
 
     @GET("/api.php?amount=1")
     fun getDefaultQuestion(
-        @Query("token")token: String,
+        @Query("token")token: String?,
         @Query("category")categoryId: Int?,
         @Query("difficulty")difficult: String?,
         @Query("type")type: String?): Observable<Result>
 
-    //https://opentdb.com/api_token.php?command=reset&token=YOURTOKENHERE
     @GET("/api_token.php?command=reset")
     fun reset(@Query("token")token: String): Observable<ResetToken>
 
+    @GET("/api.php?amount=1")
+    fun getQuestionWithoutToken(
+        @Query("category")categoryId: Int?,
+        @Query("difficulty")difficult: String?,
+        @Query("type")type: String?): Observable<Result>
 
 }

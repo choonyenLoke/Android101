@@ -1,5 +1,6 @@
 package com.example.opentriva
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,7 @@ import com.example.opentriva.apiservice.ApiServiceInterface
 import com.example.opentriva.apiservice.RetrofitService
 import com.example.opentriva.model.Result
 import com.example.opentriva.viewmodel.QuestionViewModel
+import com.google.android.material.snackbar.Snackbar
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.question_layout.*
 import java.util.*
@@ -55,6 +57,18 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
             questionViewModel.getQuestion(tokenInit.toString(), category, difficulty, type)
             questionViewModel.questionResult.observe(this, androidx.lifecycle.Observer {
                 onSuccess(it)
+            })
+            questionViewModel.status.observe(this, androidx.lifecycle.Observer {
+                if(it == false){
+                    val rootView = findViewById<View>(R.id.rootView)
+                    val snack = Snackbar.make(rootView,"No Result Found, Please Refine Criteria.", Snackbar.LENGTH_LONG)
+                    snack.setAction("BACK") {
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                    }
+                    snack.show()
+
+                }
             })
         })
 
