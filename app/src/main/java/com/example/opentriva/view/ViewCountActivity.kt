@@ -1,12 +1,12 @@
-package com.example.opentriva
+package com.example.opentriva.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.opentriva.R
 import com.example.opentriva.apiservice.ApiServiceInterface
 import com.example.opentriva.apiservice.RetrofitService
 import com.example.opentriva.model.*
@@ -41,7 +41,11 @@ class ViewCountActivity : AppCompatActivity() {
         })
         countViewModel.countList.observe(this, Observer {
             onCountSuccess(it)
-            countAdapter = CountAdapter(this, countList, categoryList)
+            countAdapter = CountAdapter(
+                this,
+                countList,
+                categoryList
+            )
             val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
             recycler_view.layoutManager = layoutManager
             recycler_view.adapter = countAdapter

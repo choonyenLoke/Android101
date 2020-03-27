@@ -1,4 +1,4 @@
-package com.example.opentriva
+package com.example.opentriva.view
 
 import android.content.Intent
 import android.graphics.Color
@@ -7,10 +7,12 @@ import android.os.Bundle
 import android.text.Html
 import android.text.Spanned
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
+import android.view.animation.AnimationUtils
+import com.example.opentriva.R
 import com.example.opentriva.model.Result
 import com.example.opentriva.viewmodel.QuestionViewModel
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.configure_question.*
 import kotlinx.android.synthetic.main.question_layout.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
@@ -57,6 +59,7 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
             questionViewModel.status.observe(this, androidx.lifecycle.Observer {
                 if(it == false){
                     load_question.visibility = View.GONE
+
                     val rootView = findViewById<View>(R.id.rootView)
                     val snack = Snackbar.make(rootView,"No Result Found, Please Refine Criteria.", Snackbar.LENGTH_INDEFINITE)
                     snack.setAction("BACK") {
@@ -69,6 +72,7 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
         })
 
         btnRoll.setOnClickListener {
+            btnRoll.setBackgroundColor(Color.LTGRAY)
             btn_first.setBackgroundColor(Color.WHITE)
             btn_second.setBackgroundColor(Color.WHITE)
             btn_third.setBackgroundColor(Color.WHITE)
@@ -86,6 +90,9 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun onSuccess(data: Result) {
         load_question.visibility = View.GONE
+        btnRoll.isClickable = true
+        btnRoll.isEnabled = true
+        btnRoll.setBackgroundColor(Color.CYAN)
         question_text.text = Html.fromHtml(data.results[0].question, Html.FROM_HTML_MODE_COMPACT)
         question_text.visibility = View.VISIBLE
         btnDifficulty.text = Html.fromHtml(data.results[0].difficulty, Html.FROM_HTML_MODE_COMPACT)
@@ -148,6 +155,9 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
+
+        val animationWrong = AnimationUtils.loadAnimation(this, R.anim.shake)
+
         when (v?.id) {
             R.id.btn_first -> {
                 btn_second.setBackgroundColor(Color.WHITE)
@@ -156,8 +166,16 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
 
                 if(btn_first.text == correct){
                     btn_first.setBackgroundColor(Color.GREEN)
+                    btn_second.clearAnimation()
+                    btn_third.clearAnimation()
+                    btn_forth.clearAnimation()
+
                 } else{
                     btn_first.setBackgroundColor(Color.RED)
+                    btn_first.startAnimation(animationWrong)
+                    btn_second.clearAnimation()
+                    btn_third.clearAnimation()
+                    btn_forth.clearAnimation()
                 }
             }
             R.id.btn_second -> {
@@ -167,8 +185,15 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
 
                 if(btn_second.text == correct){
                     btn_second.setBackgroundColor(Color.GREEN)
+                    btn_first.clearAnimation()
+                    btn_third.clearAnimation()
+                    btn_forth.clearAnimation()
                 } else{
                     btn_second.setBackgroundColor(Color.RED)
+                    btn_second.startAnimation(animationWrong)
+                    btn_first.clearAnimation()
+                    btn_third.clearAnimation()
+                    btn_forth.clearAnimation()
                 }
             }
             R.id.btn_third -> {
@@ -178,8 +203,15 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
 
                 if(btn_third.text == correct){
                     btn_third.setBackgroundColor(Color.GREEN)
+                    btn_first.clearAnimation()
+                    btn_second.clearAnimation()
+                    btn_forth.clearAnimation()
                 } else {
                     btn_third.setBackgroundColor(Color.RED)
+                    btn_third.startAnimation(animationWrong)
+                    btn_first.clearAnimation()
+                    btn_second.clearAnimation()
+                    btn_forth.clearAnimation()
                 }
             }
             R.id.btn_forth -> {
@@ -189,8 +221,15 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
 
                 if(btn_forth.text == correct){
                     btn_forth.setBackgroundColor(Color.GREEN)
+                    btn_first.clearAnimation()
+                    btn_second.clearAnimation()
+                    btn_third.clearAnimation()
                 } else {
                     btn_forth.setBackgroundColor(Color.RED)
+                    btn_forth.startAnimation(animationWrong)
+                    btn_first.clearAnimation()
+                    btn_second.clearAnimation()
+                    btn_third.clearAnimation()
                 }
             }
         }

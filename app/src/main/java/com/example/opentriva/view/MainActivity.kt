@@ -1,4 +1,4 @@
-package com.example.opentriva
+package com.example.opentriva.view
 
 import android.content.Intent
 import android.graphics.Color
@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
+import com.example.opentriva.R
 import com.example.opentriva.model.Category
 import com.example.opentriva.model.TriviaCategory
 import com.example.opentriva.viewmodel.CategoryViewModel
@@ -65,8 +66,10 @@ class MainActivity : AppCompatActivity() {
         val difficult = arrayOf("Default", "Easy", "Medium", "Hard")
         val type = arrayOf("Default", "Multiple", "Boolean")
 
-        val difficultAdapter = ArrayAdapter(this, R.layout.custom_spinner, difficult)
-        val typeAdapter = ArrayAdapter(this, R.layout.custom_spinner, type)
+        val difficultAdapter = ArrayAdapter(this,
+            R.layout.custom_spinner, difficult)
+        val typeAdapter = ArrayAdapter(this,
+            R.layout.custom_spinner, type)
 
         spinDifficult.adapter = difficultAdapter
         spinType.adapter = typeAdapter
@@ -79,7 +82,8 @@ class MainActivity : AppCompatActivity() {
         for(cat in categoryList){
             arrayCategory.add(cat.name)
         }
-        val catAdapter = ArrayAdapter(this, R.layout.custom_spinner, arrayCategory)
+        val catAdapter = ArrayAdapter(this,
+            R.layout.custom_spinner, arrayCategory)
         spinCat.adapter = catAdapter
         loading.visibility = View.GONE
         btnNext.setBackgroundColor(Color.CYAN)

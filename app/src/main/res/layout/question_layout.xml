@@ -181,6 +181,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:text="@string/roll_another" />
+        android:text="@string/roll_another"
+        android:clickable="false"
+        android:enabled="false"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

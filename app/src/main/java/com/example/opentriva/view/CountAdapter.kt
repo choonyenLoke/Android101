@@ -1,15 +1,16 @@
-package com.example.opentriva
+package com.example.opentriva.view
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.opentriva.R
 import com.example.opentriva.model.Count
 import com.example.opentriva.model.TriviaCategory
 import kotlinx.android.synthetic.main.card_view.view.*
 
-class CountAdapter(private val mContext: Context, private var countList: MutableList<Count>, private var categoryList: MutableList<TriviaCategory>)
+class CountAdapter(mContext: Context, private var countList: MutableList<Count>, private var categoryList: MutableList<TriviaCategory>)
     :RecyclerView.Adapter<CountAdapter.ViewHolder>()
 {
 
@@ -30,7 +31,7 @@ class CountAdapter(private val mContext: Context, private var countList: Mutable
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CountAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val countView = LayoutInflater.from(context)
             .inflate(R.layout.card_view, parent, false)
         return ViewHolder(countView)
